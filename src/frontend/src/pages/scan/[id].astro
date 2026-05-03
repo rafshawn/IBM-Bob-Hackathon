@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Get the scan ID from the URL parameter
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect('/dashboard');
+}
+---
+
+<BaseLayout
+  title="Scan Results - PublicPulse AI"
+  description="View your website scan results and detected issues"
+>
+  <div class="py-12 bg-canvas min-h-screen">
+    <div class="container-wide">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <a
+          href="/dashboard"
+          class="inline-flex items-center gap-2 text-slate hover:text-ink transition-colors mb-4"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to Dashboard
+        </a>
+        <h1 class="text-heading-2 text-ink">Scan Results</h1>
+        <p class="text-slate mt-2">Scan ID: <code class="text-sm bg-surface px-2 py-1 rounded">{id}</code></p>
+      </div>
+
+      <!-- Vue Component Container -->
+      <div id="scan-results-app" data-scan-id={id}></div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { createApp } from 'vue';
+  import ScanResultsApp from '../../components/ScanResultsApp.vue';
+
+  // Mount Vue app
+  const container = document.getElementById('scan-results-app');
+  if (container) {
+    const scanId = container.dataset.scanId;
+    const app = createApp(ScanResultsApp, { scanId });
+    app.mount(container);
+  }
+</script>

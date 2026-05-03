@@ -1,0 +1,29 @@
+{
+  "name": "publicpulse-ai-frontend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "keywords": [
+    "astro",
+    "vue",
+    "accessibility",
+    "seo",
+    "public-service"
+  ],
+  "author": "PublicPulse AI Team",
+  "license": "MIT",
+  "description": "AI-powered platform for auditing public service websites",
+  "dependencies": {
+    "@astrojs/tailwind": "^5.1.2",
+    "@astrojs/vue": "^4.5.2",
+    "astro": "^4.15.12",
+    "tailwindcss": "^3.4.16",
+    "vue": "^3.5.13"
+  }
+}

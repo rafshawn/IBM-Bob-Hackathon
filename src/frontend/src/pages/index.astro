@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="PublicPulse AI - AI-Powered Website Auditing for Public Services"
+  description="AI-powered platform that gives public service websites everything they need—SEO, analytics, accessibility, and intelligent automation—in one place, at a fraction of the cost of enterprise tools."
+>
+  <!-- Hero Band - Enhanced MongoDB Style: Deep Teal with Bright Green CTA -->
+  <section class="hero-band-dark relative" aria-labelledby="hero-heading">
+    <div class="container-wide text-center relative z-10">
+      <h1 id="hero-heading" class="text-hero-display text-on-dark mb-8 text-balance max-w-5xl mx-auto font-medium">
+        AI-Powered Website Auditing for Public Services
+      </h1>
+      <p class="text-xl leading-relaxed text-on-dark-muted mb-10 max-w-3xl mx-auto">
+        Everything you need—SEO, accessibility, and intelligent automation—in one place,
+        at a fraction of enterprise costs.
+      </p>
+      <a
+        href="/dashboard"
+        class="btn-primary btn-lg inline-flex items-center gap-2"
+        aria-label="Start scanning your website for free"
+      >
+        <span>Start Scanning for Free</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Features Section - Enhanced with consistent cards -->
+  <section class="py-24 bg-canvas" aria-labelledby="features-heading">
+    <div class="container-wide">
+      <h2 id="features-heading" class="sr-only">Key Features</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Feature 1: Accessibility -->
+        <article class="card-feature flex flex-col hover:-translate-y-1">
+          <div class="mb-6" aria-hidden="true">
+            <div class="w-14 h-14 rounded-xl bg-brand-green/10 flex items-center justify-center">
+              <svg class="w-7 h-7 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
+          <h3 class="text-heading-4 text-ink mb-4">Accessibility Auditing</h3>
+          <p class="text-body-md text-slate leading-relaxed flex-1">
+            WCAG 2.1 AA compliance checking to ensure your website is accessible to everyone,
+            with detailed reports and actionable recommendations.
+          </p>
+        </article>
+
+        <!-- Feature 2: SEO -->
+        <article class="card-feature flex flex-col hover:-translate-y-1">
+          <div class="mb-6" aria-hidden="true">
+            <div class="w-14 h-14 rounded-xl bg-brand-green/10 flex items-center justify-center">
+              <svg class="w-7 h-7 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+          </div>
+          <h3 class="text-heading-4 text-ink mb-4">SEO Analysis</h3>
+          <p class="text-body-md text-slate leading-relaxed flex-1">
+            Comprehensive SEO audits including meta tags, headings, and content optimization
+            to improve your website's search engine visibility.
+          </p>
+        </article>
+
+        <!-- Feature 3: AI-Powered -->
+        <article class="card-feature flex flex-col hover:-translate-y-1">
+          <div class="mb-6" aria-hidden="true">
+            <div class="w-14 h-14 rounded-xl bg-brand-green/10 flex items-center justify-center">
+              <svg class="w-7 h-7 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+          </div>
+          <h3 class="text-heading-4 text-ink mb-4">AI-Powered Fixes</h3>
+          <p class="text-body-md text-slate leading-relaxed flex-1">
+            Get intelligent recommendations and automated fix suggestions powered by AI,
+            with plain-language explanations for non-technical users.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value Proposition - "The Astro Edge" - Enhanced with consistent heights -->
+  <section class="py-24 bg-gradient-to-b from-surface-feature to-canvas" aria-labelledby="value-heading">
+    <div class="container-wide">
+      <h2 id="value-heading" class="text-heading-2 text-ink text-center mb-16">
+        The "Astro Edge"
+      </h2>
+      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <!-- Value 1 -->
+        <article class="card-content flex flex-col min-h-[240px] hover:-translate-y-1">
+          <div class="flex items-start gap-5 mb-4">
+            <span class="text-4xl flex-shrink-0" aria-hidden="true">⚡</span>
+            <h3 class="text-heading-4 text-ink">Unrivaled Performance</h3>
+          </div>
+          <p class="text-body-md text-slate leading-relaxed flex-1">
+            40% faster than enterprise competitors, working flawlessly on low-bandwidth networks
+            common in public sector environments.
+          </p>
+        </article>
+
+        <!-- Value 2 -->
+        <article class="card-content flex flex-col min-h-[240px] hover:-translate-y-1">
+          <div class="flex items-start gap-5 mb-4">
+            <span class="text-4xl flex-shrink-0" aria-hidden="true">♿</span>
+            <h3 class="text-heading-4 text-ink">Radical Accessibility</h3>
+          </div>
+          <p class="text-body-md text-slate leading-relaxed flex-1">
+            We don't just fix accessibility; our tool is a benchmark for it.
+            Built with WCAG 2.1 AA compliance from the ground up.
+          </p>
+        </article>
+
+        <!-- Value 3 -->
+        <article class="card-content flex flex-col min-h-[240px] hover:-translate-y-1">
+          <div class="flex items-start gap-5 mb-4">
+            <span class="text-4xl flex-shrink-0" aria-hidden="true">💰</span>
+            <h3 class="text-heading-4 text-ink">Cost Efficiency</h3>
+          </div>
+          <p class="text-body-md text-slate leading-relaxed flex-1">
+            Replace $50k/year enterprise seats with a lean, AI-driven alternative
+            designed specifically for public service budgets.
+          </p>
+        </article>
+
+        <!-- Value 4 -->
+        <article class="card-content flex flex-col min-h-[240px] hover:-translate-y-1">
+          <div class="flex items-start gap-5 mb-4">
+            <span class="text-4xl flex-shrink-0" aria-hidden="true">🗣️</span>
+            <h3 class="text-heading-4 text-ink">Human-Language Focused</h3>
+          </div>
+          <p class="text-body-md text-slate leading-relaxed flex-1">
+            Translate "Developer Speak" into "Public Servant Speak" with
+            plain-language explanations and actionable recommendations.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner - Enhanced Dark Teal -->
+  <section class="bg-gradient-to-br from-brand-teal-deep to-brand-teal text-on-dark py-20 relative overflow-hidden" aria-labelledby="cta-heading">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(0,237,100,0.08)_0%,transparent_50%)]" aria-hidden="true"></div>
+    <div class="container-narrow text-center relative z-10">
+      <h2 id="cta-heading" class="text-heading-2 text-on-dark mb-5">
+        Ready to improve your website?
+      </h2>
+      <p class="text-lg leading-relaxed text-on-dark-muted mb-10 max-w-2xl mx-auto">
+        Start scanning your website now and get actionable insights in minutes.
+        No credit card required.
+      </p>
+      <a
+        href="/dashboard"
+        class="btn-primary btn-lg inline-flex items-center gap-2"
+        aria-label="Get started with PublicPulse AI"
+      >
+        <span>Get Started</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

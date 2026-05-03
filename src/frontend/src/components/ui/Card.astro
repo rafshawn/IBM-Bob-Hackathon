@@ -1,0 +1,81 @@
+---
+/**
+ * Card Component
+ * 
+ * A flexible card component with multiple variants for different use cases.
+ * Follows MongoDB design system with consistent padding and elevation.
+ * 
+ * @component
+ * @example
+ * <Card variant="feature" hoverable>
+ *   <h3>Feature Title</h3>
+ *   <p>Feature description</p>
+ * </Card>
+ */
+
+interface Props {
+  variant?: 'feature' | 'content' | 'compact';
+  elevated?: boolean;
+  bordered?: boolean;
+  hoverable?: boolean;
+  class?: string;
+  minHeight?: string;
+}
+
+const {
+  variant = 'content',
+  elevated = false,
+  bordered = true,
+  hoverable = false,
+  class: className = '',
+  minHeight,
+  ...rest
+} = Astro.props;
+
+// Base classes for all cards
+const baseClasses = 'rounded-lg transition-all duration-200';
+
+// Variant-specific padding and min-height
+const variantClasses = {
+  feature: 'p-12 min-h-[320px]',
+  content: 'p-10 min-h-[280px]',
+  compact: 'p-6 min-h-[200px]',
+};
+
+// Border classes
+const borderClass = bordered ? 'border border-hairline' : '';
+
+// Elevation classes
+const elevationClass = elevated 
+  ? 'shadow-[rgba(0,30,43,0.08)_0px_4px_12px_0px]' 
+  : 'shadow-[rgba(0,30,43,0.04)_0px_2px_8px_0px]';
+
+// Hover classes
+const hoverClass = hoverable 
+  ? 'hover:shadow-[rgba(0,30,43,0.12)_0px_6px_16px_0px] hover:-translate-y-1' 
+  : '';
+
+// Background
+const bgClass = 'bg-canvas';
+
+// Custom min-height if provided
+const minHeightStyle = minHeight ? `min-height: ${minHeight};` : '';
+
+// Combine all classes
+const cardClasses = `${baseClasses} ${variantClasses[variant]} ${borderClass} ${elevationClass} ${hoverClass} ${bgClass} ${className}`.trim();
+---
+
+<div
+  class={cardClasses}
+  style={minHeightStyle}
+  {...rest}
+>
+  <slot />
+</div>
+
+<style>
+  /* Ensure smooth transitions */
+  div {
+    will-change: transform, box-shadow;
+  }
+</style>

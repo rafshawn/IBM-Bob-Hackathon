@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from app.config import settings
 from app.database import init_db
 from app.schemas import HealthCheck
-from app.routers import scans, issues, pages
+from app.routers import scans, issues, pages, recommendations
 
 # Initialize FastAPI application
 app = FastAPI(
@@ -103,6 +103,12 @@ app.include_router(
     pages.router,
     prefix="/api/v1/pages",
     tags=["Pages"]
+)
+
+app.include_router(
+    recommendations.router,
+    prefix="/api/v1/recommendations",
+    tags=["Recommendations"]
 )
 
 

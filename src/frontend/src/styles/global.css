@@ -1,0 +1,410 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Font Loading - Euclid Circular A with fallbacks */
+@font-face {
+  font-family: 'Euclid Circular A';
+  src: local('Euclid Circular A'), local('EuclidCircularA');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* Prevent FOIT (Flash of Invisible Text) */
+}
+
+@font-face {
+  font-family: 'Euclid Circular A';
+  src: local('Euclid Circular A Medium'), local('EuclidCircularA-Medium');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Euclid Circular A';
+  src: local('Euclid Circular A SemiBold'), local('EuclidCircularA-SemiBold');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    /* MongoDB Design System Variables - Enhanced */
+    --color-brand-green: #00ED64;
+    --color-brand-teal-deep: #001E2B;
+    --color-canvas: #FFFFFF;
+    --color-ink: #001E2B;
+    
+    /* Enhanced Spacing Scale */
+    --spacing-3xs: 2px;
+    --spacing-2xs: 4px;
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 40px;
+    --spacing-3xl: 48px;
+    --spacing-4xl: 64px;
+    --spacing-5xl: 80px;
+    --spacing-6xl: 96px;
+    --spacing-7xl: 120px;
+  }
+
+  * {
+    @apply antialiased;
+  }
+
+  body {
+    background-color: #FFFFFF;
+    color: #001E2B;
+    font-family: 'Euclid Circular A', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Enhanced Typography Hierarchy */
+  h1 {
+    font-size: 48px;
+    line-height: 1.20;
+    letter-spacing: -0.5px;
+    font-weight: 500;
+    color: #001E2B;
+  }
+
+  h2 {
+    font-size: 36px;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    font-weight: 500;
+    color: #001E2B;
+  }
+
+  h3 {
+    font-size: 28px;
+    line-height: 1.30;
+    font-weight: 500;
+    color: #001E2B;
+  }
+
+  h4 {
+    font-size: 22px;
+    line-height: 1.35;
+    font-weight: 500;
+    color: #001E2B;
+  }
+
+  h5 {
+    font-size: 18px;
+    line-height: 1.40;
+    font-weight: 600;
+    color: #001E2B;
+  }
+
+  /* Enhanced Focus Styles for Accessibility */
+  *:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px #00ED64, 0 0 0 6px rgba(0, 237, 100, 0.2);
+    border-radius: 4px;
+  }
+
+  /* Smooth Scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Legacy Button Classes - Use Button component instead */
+  /* Kept for backward compatibility during migration */
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full
+           px-8 py-3.5 text-[15px] min-h-[48px] font-semibold
+           bg-brand-green text-on-primary transition-all duration-200
+           hover:bg-primary-pressed hover:-translate-y-0.5
+           focus:outline-none focus:ring-2 focus:ring-brand-green
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    box-shadow: rgba(0, 237, 100, 0.2) 0px 2px 8px 0px;
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    box-shadow: rgba(0, 237, 100, 0.3) 0px 4px 12px 0px;
+  }
+
+  .btn-on-dark {
+    @apply btn-primary;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full
+           px-8 py-3.5 text-[15px] min-h-[48px] font-semibold
+           bg-transparent text-ink border-2 border-hairline-strong
+           transition-all duration-200 hover:border-ink
+           focus:outline-none focus:ring-2 focus:ring-brand-green
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-lg {
+    @apply px-10 py-4 text-base min-h-[56px];
+  }
+
+  /* Input Components */
+  .input {
+    @apply w-full px-4 py-3 border-2 rounded-md
+           focus:outline-none focus:ring-2 focus:border-transparent transition-colors
+           disabled:cursor-not-allowed disabled:bg-surface;
+    background-color: #FFFFFF;
+    color: #001E2B;
+    border-color: #D1D5DB;
+    font-size: 16px;
+    line-height: 1.55;
+    min-height: 48px;
+  }
+  
+  .input:focus {
+    border-color: #00684A;
+    box-shadow: 0 0 0 3px rgba(0, 237, 100, 0.1);
+  }
+  
+  .input::placeholder {
+    color: #89979B;
+  }
+
+  .input-large {
+    @apply input;
+    min-height: 56px;
+    font-size: 18px;
+    padding: 14px 16px;
+  }
+
+  /* Legacy Card Classes - Use Card component instead */
+  /* Kept for backward compatibility during migration */
+  .card-feature {
+    @apply rounded-lg border p-12 transition-all duration-200;
+    background-color: #FFFFFF;
+    border-color: #E5E7EB;
+    min-height: 320px;
+    box-shadow: rgba(0, 30, 43, 0.04) 0px 2px 8px 0px;
+  }
+  
+  .card-feature:hover {
+    box-shadow: rgba(0, 30, 43, 0.08) 0px 4px 12px 0px;
+    transform: translateY(-2px);
+  }
+
+  .card-content {
+    @apply rounded-lg border p-10 transition-all duration-200;
+    background-color: #FFFFFF;
+    border-color: #E5E7EB;
+    min-height: 280px;
+    box-shadow: rgba(0, 30, 43, 0.04) 0px 2px 8px 0px;
+  }
+
+  /* Legacy Badge Classes - Use Badge component instead */
+  .badge-green-soft {
+    @apply inline-flex items-center rounded-full px-3 py-1 font-semibold text-[13px];
+    background-color: #E3FCF0;
+    color: #00684A;
+  }
+
+  .badge-purple {
+    @apply inline-flex items-center rounded-sm px-2.5 py-1 font-semibold text-[13px];
+    background-color: #7B61FF;
+    color: #FFFFFF;
+  }
+
+  .badge-orange {
+    @apply inline-flex items-center rounded-sm px-2.5 py-1 font-semibold text-[13px];
+    background-color: #FF6B35;
+    color: #FFFFFF;
+  }
+
+  /* Code Components */
+  .code-block {
+    @apply rounded-md font-mono overflow-x-auto;
+    background-color: #13131A;
+    color: #FFFFFF;
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .code-mockup-card {
+    @apply rounded-lg font-mono;
+    background-color: #13131A;
+    color: #FFFFFF;
+    padding: 24px;
+    box-shadow: rgba(0, 30, 43, 0.12) 0px 12px 24px -4px;
+  }
+
+  /* Alert Components */
+  .alert {
+    @apply px-4 py-3 rounded border-l-4;
+  }
+
+  .alert-error {
+    @apply alert;
+    background-color: #FEE2E2;
+    border-color: #991B1B;
+    color: #991B1B;
+  }
+
+  .alert-warning {
+    @apply alert;
+    background-color: #FEF3C7;
+    border-color: #92400E;
+    color: #92400E;
+  }
+
+  .alert-success {
+    @apply alert;
+    background-color: #D1FAE5;
+    border-color: #065F46;
+    color: #065F46;
+  }
+
+  /* Hero Band - Enhanced MongoDB Signature */
+  .hero-band-dark {
+    background: linear-gradient(135deg, #001E2B 0%, #003545 100%);
+    color: #FFFFFF;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hero-band-dark::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(0, 237, 100, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Table Components */
+  .table-row {
+    @apply border-b;
+    background-color: #FFFFFF;
+    color: #001E2B;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-color: #F3F4F6;
+  }
+
+  /* Loading Spinner */
+  .spinner {
+    @apply inline-block w-5 h-5 border-2 border-current border-t-transparent
+           rounded-full animate-spin;
+  }
+}
+
+@layer utilities {
+  /* Accessibility Utilities */
+  .skip-to-content {
+    @apply absolute -top-10 left-0 px-4 py-2 z-50 rounded transition-all;
+    background-color: #00ED64;
+    color: #001E2B;
+  }
+  
+  .skip-to-content:focus {
+    top: 0;
+  }
+
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden
+           whitespace-nowrap border-0;
+  }
+
+  /* Text Utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Container Utilities */
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-8;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-8;
+  }
+
+  /* Enhanced Responsive Typography */
+  @media (max-width: 479px) {
+    .text-hero-display {
+      font-size: 40px;
+      line-height: 1.15;
+    }
+    .text-display-lg {
+      font-size: 36px;
+    }
+    .text-heading-1 {
+      font-size: 32px;
+    }
+    .text-heading-2 {
+      font-size: 28px;
+    }
+    .hero-band-dark {
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+  }
+
+  @media (min-width: 480px) and (max-width: 767px) {
+    .text-hero-display {
+      font-size: 48px;
+      line-height: 1.15;
+    }
+    .text-display-lg {
+      font-size: 42px;
+    }
+    .text-heading-1 {
+      font-size: 36px;
+    }
+    .hero-band-dark {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .text-hero-display {
+      font-size: 64px;
+      line-height: 1.12;
+    }
+    .text-display-lg {
+      font-size: 52px;
+    }
+    .text-heading-1 {
+      font-size: 42px;
+    }
+    .hero-band-dark {
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .text-hero-display {
+      font-size: 88px;
+      line-height: 1.15;
+    }
+  }
+}
+
+/* Made with Bob - MongoDB Design System Implementation */

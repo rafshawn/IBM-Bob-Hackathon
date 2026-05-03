@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ScanForm from '../components/ScanForm.vue';
+---
+
+<BaseLayout
+  title="Dashboard - PublicPulse AI"
+  description="Scan your website for SEO and accessibility issues with AI-powered recommendations."
+>
+  <!-- Page Header - Enhanced with gradient background -->
+  <section class="bg-gradient-to-b from-surface to-canvas border-b border-hairline py-12">
+    <div class="container-wide">
+      <h1 class="text-heading-1 text-ink mb-3">
+        Website Audit Dashboard
+      </h1>
+      <p class="text-lg text-slate max-w-3xl">
+        Enter a website URL to start scanning for SEO and accessibility issues.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="py-20 bg-surface">
+    <div class="container-wide">
+      <!-- Vue Island - Interactive Scan Form with enhanced visual anchoring -->
+      <div class="mb-16 max-w-4xl mx-auto">
+        <div class="card-feature border-2 border-brand-green/20 shadow-[rgba(0,237,100,0.08)_0px_8px_24px_0px]">
+          <ScanForm client:load />
+        </div>
+      </div>
+
+      <!-- Static Information Section (Zero-JS) - Enhanced with consistent heights -->
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
+        <!-- How It Works Card -->
+        <article class="card-content flex flex-col min-h-[520px]" aria-labelledby="how-it-works-heading">
+          <h2 id="how-it-works-heading" class="text-heading-4 text-ink mb-8">
+            How It Works
+          </h2>
+          <ol class="space-y-6 flex-1" role="list">
+            <li class="flex items-start gap-3">
+              <span
+                class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-green
+                       text-on-primary text-body-sm-medium flex items-center
+                       justify-center"
+                aria-hidden="true"
+              >
+                1
+              </span>
+              <span class="text-body-md text-slate">
+                Enter your website URL and click "Scan Website"
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-green
+                       text-on-primary text-body-sm-medium flex items-center
+                       justify-center"
+                aria-hidden="true"
+              >
+                2
+              </span>
+              <span class="text-body-md text-slate">
+                Our system crawls and analyzes your pages in real-time
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-green
+                       text-on-primary text-body-sm-medium flex items-center
+                       justify-center"
+                aria-hidden="true"
+              >
+                3
+              </span>
+              <span class="text-body-md text-slate">
+                View detected issues prioritized by severity and impact
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-green
+                       text-on-primary text-body-sm-medium flex items-center
+                       justify-center"
+                aria-hidden="true"
+              >
+                4
+              </span>
+              <span class="text-body-md text-slate">
+                Get AI-powered recommendations and automated fix suggestions
+              </span>
+            </li>
+          </ol>
+        </article>
+
+        <!-- What We Analyze Card -->
+        <article class="card-content flex flex-col min-h-[520px]" aria-labelledby="what-we-analyze-heading">
+          <h2 id="what-we-analyze-heading" class="text-heading-4 text-ink mb-8">
+            What We Analyze
+          </h2>
+          <div class="space-y-8 flex-1">
+            <!-- SEO -->
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="badge-green-soft">SEO</span>
+                <h3 class="text-heading-5 text-ink">Search Engine Optimization</h3>
+              </div>
+              <p class="text-body-sm text-slate">
+                Meta tags, title tags, headings, image alt text, and content structure
+                to improve search engine visibility.
+              </p>
+            </div>
+
+            <!-- Accessibility -->
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="badge-purple">A11y</span>
+                <h3 class="text-heading-5 text-ink">Accessibility</h3>
+              </div>
+              <p class="text-body-sm text-slate">
+                WCAG 2.1 AA compliance, color contrast, keyboard navigation, ARIA labels,
+                and semantic HTML structure.
+              </p>
+            </div>
+
+            <!-- Quality Assurance -->
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="badge-orange">QA</span>
+                <h3 class="text-heading-5 text-ink">Quality Assurance</h3>
+              </div>
+              <p class="text-body-sm text-slate">
+                Broken links, missing resources, HTML validation, performance metrics,
+                and best practices.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Benefits Section - Enhanced with gradient and better spacing -->
+      <section
+        class="bg-gradient-to-br from-brand-green-soft via-surface-feature to-canvas rounded-xl p-12 border border-brand-green/30 shadow-[rgba(0,237,100,0.1)_0px_8px_32px_0px]"
+        aria-labelledby="benefits-heading"
+      >
+        <h2 id="benefits-heading" class="text-heading-3 text-ink text-center mb-12">
+          Why PublicPulse AI?
+        </h2>
+        <div class="grid md:grid-cols-3 gap-12 text-center">
+          <!-- Metric 1 -->
+          <div class="flex flex-col items-center">
+            <div class="text-6xl font-bold text-brand-green mb-4" aria-label="100 out of 100">
+              100/100
+            </div>
+            <p class="text-lg font-semibold text-ink mb-2">
+              Lighthouse Performance Score
+            </p>
+            <p class="text-body-sm text-slate">
+              Built for speed and accessibility
+            </p>
+          </div>
+
+          <!-- Metric 2 -->
+          <div class="flex flex-col items-center">
+            <div class="text-6xl font-bold text-brand-green mb-4" aria-label="40 percent">
+              40%
+            </div>
+            <p class="text-lg font-semibold text-ink mb-2">
+              Faster than Enterprise Tools
+            </p>
+            <p class="text-body-sm text-slate">
+              Works on low-bandwidth networks
+            </p>
+          </div>
+
+          <!-- Metric 3 -->
+          <div class="flex flex-col items-center">
+            <div class="text-6xl font-bold text-brand-green mb-4" aria-label="Zero dollars">
+              $0
+            </div>
+            <p class="text-lg font-semibold text-ink mb-2">
+              Cost vs $50k/year Enterprise
+            </p>
+            <p class="text-body-sm text-slate">
+              Free for public service organizations
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

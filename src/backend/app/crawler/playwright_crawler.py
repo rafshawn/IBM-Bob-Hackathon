@@ -207,11 +207,25 @@ class WebCrawler:
     
     def _is_same_domain(self, url: str) -> bool:
         """
-        Check if URL belongs to the same domain
+        Check if URL belongs to the same domain (lenient with www)
+        
+        Normalizes domains by removing 'www.' prefix to allow:
+        - example.com ↔ www.example.com
+        - subdomain.example.com ↔ www.subdomain.example.com
+        
+        This ensures the crawler can follow links between www and non-www
+        versions of the same domain without being blocked.
         """
         try:
             parsed = urlparse(url)
-            return parsed.netloc == self.base_domain
+            url_domain = parsed.netloc.lower()
+            base_domain = self.base_domain.lower()
+            
+            # Normalize by removing www. prefix from both domains
+            url_domain_normalized = url_domain.removeprefix('www.')
+            base_domain_normalized = base_domain.removeprefix('www.')
+            
+            return url_domain_normalized == base_domain_normalized
         except:
             return False
 

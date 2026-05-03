@@ -2,6 +2,7 @@
 AI Service for generating recommendations using IBM WatsonX
 """
 import uuid
+import re
 from datetime import datetime
 from typing import Dict, Optional
 from app.config import settings
@@ -98,6 +99,63 @@ Requirements:
 
 
 # ============================================================================
+# Helper Functions
+# ============================================================================
+
+def fix_img_alt_text(html_snippet: str, alt_text: str = "Descriptive text about this image") -> str:
+    """
+    Fix missing or empty alt text in img tags
+    
+    This function:
+    1. Replaces empty alt="" or alt='' with descriptive alt text
+    2. Adds alt attribute if missing
+    3. Does NOT create duplicate alt attributes
+    4. Preserves all other attributes (src, class, width, height, etc.)
+    
+    Args:
+        html_snippet: HTML containing img tags
+        alt_text: The alt text to use (default: generic description)
+        
+    Returns:
+        Fixed HTML with proper alt attributes
+        
+    Examples:
+        >>> fix_img_alt_text('<img src="/hero.jpg" alt="">')
+        '<img src="/hero.jpg" alt="Descriptive text about this image">'
+        
+        >>> fix_img_alt_text('<img src="/icon.png">')
+        '<img src="/icon.png" alt="Descriptive text about this image">'
+        
+        >>> fix_img_alt_text('<img src="/logo.png" class="logo" alt="">')
+        '<img src="/logo.png" class="logo" alt="Descriptive text about this image">'
+    """
+    def replace_img_tag(match):
+        img_tag = match.group(0)
+        
+        # Check if alt attribute exists (empty or not)
+        if re.search(r'alt\s*=\s*["\']', img_tag):
+            # Replace existing empty alt with descriptive text
+            # Handles: alt="" or alt='' or alt="something"
+            fixed = re.sub(
+                r'alt\s*=\s*["\'][^"\']*["\']',
+                f'alt="{alt_text}"',
+                img_tag
+            )
+            return fixed
+        else:
+            # No alt attribute - add it before the closing >
+            # Insert before the closing > or before />
+            if img_tag.endswith('/>'):
+                return img_tag[:-2] + f' alt="{alt_text}"/>'
+            else:
+                return img_tag[:-1] + f' alt="{alt_text}">'
+    
+    # Find all img tags and fix them
+    fixed_html = re.sub(r'<img[^>]*>', replace_img_tag, html_snippet)
+    return fixed_html
+
+
+# ============================================================================
 # Mock Recommendation Generator (MVP Fallback)
 # ============================================================================
 
@@ -121,9 +179,12 @@ def generate_mock_recommendation(issue_context: Dict) -> Dict:
     
     # Missing Alt Text
     if "alt" in description or "alt text" in title:
+        # Use helper function to properly fix alt text without creating duplicates
+        fixed_html = fix_img_alt_text(snippet) if snippet else "<img src='image.jpg' alt='Descriptive text about this image'>"
+        
         return {
             "plain_language_explanation": "Images need alternative text (alt text) so screen readers can describe them to visually impaired users. This is required by WCAG 2.1 and helps everyone understand your content.",
-            "suggested_fix": snippet.replace(">", " alt='Descriptive text about this image'>") if snippet else "<img src='image.jpg' alt='Descriptive text about this image'>",
+            "suggested_fix": fixed_html,
             "confidence_score": 95.0,
             "reasoning": "Adding descriptive alt text meets WCAG 2.1 Success Criterion 1.1.1 (Non-text Content) and improves accessibility for screen reader users."
         }

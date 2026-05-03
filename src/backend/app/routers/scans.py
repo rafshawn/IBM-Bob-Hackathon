@@ -21,34 +21,125 @@ router = APIRouter()
 
 async def crawl_website(scan_id: str, url: str, max_pages: int, max_depth: int):
     """
-    Background task to crawl website
+    Background task to crawl website and analyze issues
     
-    This is a placeholder - actual implementation will use Playwright crawler
+    This function:
+    1. Crawls the website using Playwright
+    2. Creates Page records for each crawled page
+    3. Runs SEO and accessibility analyzers
+    4. Creates Issue records for detected problems
+    5. Updates Site status and statistics
     """
     from app.database import SessionLocal
+    from app.crawler.playwright_crawler import crawl_website as crawler_crawl
+    from app.analyzers import analyze_seo_issues, analyze_accessibility_issues
+    from app.utils.priority_scoring import calculate_global_score
     
     db = SessionLocal()
+    
     try:
         # Update site status to in_progress
         site = db.query(Site).filter(Site.id == scan_id).first()
-        if site:
-            site.status = "in_progress"
-            site.updated_at = datetime.utcnow()
-            db.commit()
+        if not site:
+            return
         
-        # TODO: Implement actual crawling logic
-        # from app.crawler.playwright_crawler import crawl_site
-        # results = await crawl_site(url, max_pages, max_depth)
+        site.status = "in_progress"
+        site.updated_at = datetime.utcnow()
+        db.commit()
         
-        # For now, just mark as completed
-        if site:
-            site.status = "completed"
-            site.pages_scanned = 0
-            site.total_pages = 0
-            site.updated_at = datetime.utcnow()
-            db.commit()
+        # Crawl the website
+        print(f"Starting crawl for {url} (max_pages={max_pages}, max_depth={max_depth})")
+        pages_data = await crawler_crawl(url, max_pages, max_depth)
+        
+        # Update total pages count
+        site.total_pages = len(pages_data)
+        db.commit()
+        
+        print(f"Crawled {len(pages_data)} pages, analyzing issues...")
+        
+        # Track issue counts for global score
+        total_issues = 0
+        high_count = 0
+        medium_count = 0
+        low_count = 0
+        
+        # Process each page
+        for page_data in pages_data:
+            try:
+                # Create Page record
+                page_id = str(uuid.uuid4())
+                page = Page(
+                    id=page_id,
+                    site_id=scan_id,
+                    url=page_data.get('url'),
+                    title=page_data.get('title'),
+                    meta_description=page_data.get('meta_description'),
+                    meta_tags=page_data.get('meta_tags'),
+                    h1_tags=page_data.get('h1_tags'),
+                    status_code=page_data.get('status_code'),
+                    crawled_at=datetime.utcnow()
+                )
+                db.add(page)
+                db.flush()  # Get the page ID without committing
+                
+                # Analyze SEO issues
+                seo_issues = analyze_seo_issues(page_id, page_data)
+                for issue in seo_issues:
+                    db.add(issue)
+                    total_issues += 1
+                    if issue.severity == 'high':
+                        high_count += 1
+                    elif issue.severity == 'medium':
+                        medium_count += 1
+                    else:
+                        low_count += 1
+                
+                # Analyze accessibility issues
+                a11y_issues = analyze_accessibility_issues(page_id, page_data)
+                for issue in a11y_issues:
+                    db.add(issue)
+                    total_issues += 1
+                    if issue.severity == 'high':
+                        high_count += 1
+                    elif issue.severity == 'medium':
+                        medium_count += 1
+                    else:
+                        low_count += 1
+                
+                # Commit page and its issues
+                db.commit()
+                
+                # Update progress
+                site.pages_scanned += 1
+                site.updated_at = datetime.utcnow()
+                db.commit()
+                
+                print(f"Processed page {site.pages_scanned}/{site.total_pages}: {page_data.get('url')}")
+                
+            except Exception as page_error:
+                print(f"Error processing page {page_data.get('url')}: {str(page_error)}")
+                db.rollback()
+                continue
+        
+        # Calculate global score
+        global_score = calculate_global_score(
+            total_issues=total_issues,
+            high_count=high_count,
+            medium_count=medium_count,
+            low_count=low_count,
+            pages_scanned=site.pages_scanned
+        )
+        
+        # Mark scan as completed
+        site.status = "completed"
+        site.global_score = global_score
+        site.updated_at = datetime.utcnow()
+        db.commit()
+        
+        print(f"Scan completed: {site.pages_scanned} pages, {total_issues} issues, score: {global_score}")
             
     except Exception as e:
+        print(f"Error during scan: {str(e)}")
         # Mark scan as failed
         site = db.query(Site).filter(Site.id == scan_id).first()
         if site:

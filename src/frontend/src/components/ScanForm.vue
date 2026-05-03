@@ -8,6 +8,19 @@ const error = ref('');
 const success = ref('');
 const statusMessage = ref('');
 
+function normalizeUrl(inputUrl: string): string {
+  // Trim whitespace
+  let normalized = inputUrl.trim();
+  
+  // If URL already has a protocol, return as is
+  if (normalized.startsWith('http://') || normalized.startsWith('https://')) {
+    return normalized;
+  }
+  
+  // Otherwise, prepend https://
+  return `https://${normalized}`;
+}
+
 async function handleSubmit() {
   // Reset states
   loading.value = true;
@@ -16,7 +29,9 @@ async function handleSubmit() {
   statusMessage.value = 'Starting scan...';
   
   try {
-    const result = await startScan(url.value);
+    // Normalize the URL before sending to API
+    const normalizedUrl = normalizeUrl(url.value);
+    const result = await startScan(normalizedUrl);
     success.value = 'Scan started successfully! Redirecting to results...';
     statusMessage.value = 'Scan started successfully';
     
@@ -38,8 +53,10 @@ function validateUrl(): boolean {
     return false;
   }
   
-  if (!url.value.startsWith('http://') && !url.value.startsWith('https://')) {
-    error.value = 'URL must start with http:// or https://';
+  // Basic URL validation - just check it's not empty after trimming
+  const trimmed = url.value.trim();
+  if (!trimmed) {
+    error.value = 'Please enter a valid URL';
     return false;
   }
   
@@ -80,8 +97,8 @@ function handleFormSubmit(e: Event) {
         <input
           id="url"
           v-model="url"
-          type="url"
-          placeholder="https://example.gov"
+          type="text"
+          placeholder="example.gov or https://example.gov"
           required
           :disabled="loading"
           class="input w-full h-14 text-lg"
@@ -91,7 +108,7 @@ function handleFormSubmit(e: Event) {
           :aria-errormessage="error ? 'url-error' : undefined"
         />
         <p id="url-help" class="text-body-sm text-slate mt-2">
-          Enter the full URL including http:// or https://
+          Enter your website URL (https:// will be added automatically if not provided)
         </p>
       </div>
 

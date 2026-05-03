@@ -10,7 +10,7 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
   ],
-  output: 'static',
+  output: 'server',
   server: {
     port: 4321,
     host: true,
